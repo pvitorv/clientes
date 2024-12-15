@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-950 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <p class="mb4">Olá <strong>{{ Auth::user()->name }}</strong></p>
                 </div>
@@ -27,9 +27,9 @@
                                 <th>E-mail</th>
                                 <th>Data de cadastro</th>
 
-                            @can('level')   
+                            @can('level')
                                 <th class="text-center">Ações</th>
-                            @endcan  
+                            @endcan
 
 
                             </tr>
@@ -49,11 +49,11 @@
                                     <td class="p-2">{{ $user->email }}</td>
                                     <td class="p-2">{{ $user->created_at }}</td>
 
-                                @can('level')   
+                                @can('level')
                                     <td class="text-center">
                                         <a href="{{ route('user.edit', $user->id) }}">Editar</a>
                                     </td>
-                                @endcan    
+                                @endcan
 
                                 </tr>
                             @endforeach

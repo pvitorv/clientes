@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\User; // Importação correta da classe User
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -16,6 +17,17 @@ class ClienteController extends BaseController
     public function __construct()
     {
         $this->middleware('can:level')->only('index');
+    }
+
+    public function meus_clientes(User $id)
+    {
+        $user = User::where('id', $id->id)->first();
+        // Adicione mais lógica aqui, se necessário
+        $clientes = $user->customers()->get();
+
+        return view('clientes.meus_clientes',[
+            'clientes' => $clientes
+        ]);
     }
 
     /**
@@ -58,7 +70,7 @@ class ClienteController extends BaseController
      */
     public function show(Cliente $cliente)
     {
-        //
+        return view('clientes.show',['cliente' => $cliente]);
     }
 
     /**
@@ -85,6 +97,7 @@ class ClienteController extends BaseController
         //
     }
 }
+
 
 
 
