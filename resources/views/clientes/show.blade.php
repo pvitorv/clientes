@@ -13,7 +13,11 @@
                     <p class="mb-4">
                         Exibindo detalhes do cliente {{ $cliente->nome }}
                     </p>
-                    <p><a href="{{ route('meus.clientes', Auth::user()->id) }}" class="bg-blue-500 text-white p-2 rounded ">Meus clientes</a></p>
+                    <p>
+                        <a href="{{route('meus.clientes',Auth::user()->id)}}"class="bg-blue-500 text-white p-2 rounded ">Meus clientes</a>
+                        <a href="{{route('cliente.edit', $cliente->id)}}"class="bg-green-500 text-white p-2 ml-2  mr-2 rounded ">Editar</a>
+                        <a href="{{ route('confirma.delete', $cliente->id) }}"class="bg-red-500 text-white p-2 rounded ">Excluir</a>
+                    </p>
                 </div>
 
                 <div class="p-6 text-gray-100">

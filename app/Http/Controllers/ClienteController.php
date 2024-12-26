@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\User; // Importação correta da classe User
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -25,7 +26,7 @@ class ClienteController extends BaseController
         // Adicione mais lógica aqui, se necessário
         $clientes = $user->customers()->get();
 
-        return view('clientes.meus_clientes',[
+        return view('clientes.meus_clientes', [
             'clientes' => $clientes
         ]);
     }
@@ -70,7 +71,7 @@ class ClienteController extends BaseController
      */
     public function show(Cliente $cliente)
     {
-        return view('clientes.show',['cliente' => $cliente]);
+        return view('clientes.show', ['cliente' => $cliente]);
     }
 
     /**
@@ -78,7 +79,7 @@ class ClienteController extends BaseController
      */
     public function edit(Cliente $cliente)
     {
-        //
+        return view('clientes.edit', ['cliente' => $cliente]);
     }
 
     /**
@@ -86,7 +87,8 @@ class ClienteController extends BaseController
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        $cliente->update($request->all());
+        return redirect()->route('cliente.show', $cliente->id)->with('msg', 'Cliente atualizado com sucesso!');
     }
 
     /**
@@ -94,9 +96,17 @@ class ClienteController extends BaseController
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        Cliente::findOrfail($cliente->id)->delete();
+        return redirect()->route('meus.clientes',Auth::user()->id);
+    }
+
+    public function confirma_delete(Cliente $id)
+    {
+        return view('clientes.confirma_delete', ['id' => $id]);
     }
 }
+
+
 
 
 
