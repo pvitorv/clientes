@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=ep-morning-meadow-a5nhpaqz.aws-us-east-2.pg.laravel.cloud
+      - DB_PORT=5432
+      - DB_DATABASE=clientes
+      - DB_USERNAME=laravel
+      - DB_PASSWORD=npg_tluPOz51vYVc
+    networks:
+      - laravel
+
+  web:
+    image: nginx:alpine
+    container_name: laravel_web
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    ports:
+      - "8000:80"
+    networks:
+      - laravel
+
+  postgres:
+    image: postgres:13
+    container_name: laravel_postgres
+    environment:
+      POSTGRES_DB: clientes
+      POSTGRES_USER: laravel
+      POSTGRES_PASSWORD: npg_tluPOz51vYVc
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - laravel
+
+networks:
+  laravel:
+
+volumes:
+  postgres-data:
+
